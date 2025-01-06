@@ -6,6 +6,7 @@ import LogInScreen from '../screens/auth/LogInScreen';
 import RegisterScreen from '../screens/auth/RegisterScreen';
 import HomeScreen from '../screens/home/HomeScreen';
 import ForgotPasswordScreen from '../screens/auth/ForgotPassword';
+import InitScreen from '../screens/home/InitScreen';
 
 const Stack = createStackNavigator();
 
@@ -15,7 +16,7 @@ const StackNavigator = () => {
   useEffect(() => {
     const backAction = () => {
       const currentRoute = navigation.getCurrentRoute().name;
-      if (currentRoute === 'LogInScreen') {
+      if (currentRoute === 'InitScreen') {
         BackHandler.exitApp();
         return true; 
       }
@@ -29,7 +30,8 @@ const StackNavigator = () => {
   }, [navigation]); 
 
   return (
-    <Stack.Navigator initialRouteName="LogInScreen">
+    <Stack.Navigator initialRouteName="InitScreen">
+      <Stack.Screen name="InitScreen" component={InitScreen} options={{ headerShown: false }} />
       <Stack.Screen name="LogInScreen" component={LogInScreen} options={{ headerShown: false }} />
       <Stack.Screen name="RegisterScreen" component={RegisterScreen} options={{ headerShown: false }} />
       <Stack.Screen name="HomeScreen" component={HomeScreen} options={{ headerShown: false }} />

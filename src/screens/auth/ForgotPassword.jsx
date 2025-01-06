@@ -1,155 +1,90 @@
 import {
-    ScrollView,
-    Image,
-    StyleSheet,
-    Text,
-    TextInput,
-    TouchableOpacity,
-    View,
-    Dimensions,
-    KeyboardAvoidingView,
-    Platform,
-  } from "react-native";
-  import React, { useState } from "react";
-  import { colors } from "../../utils/colors";
-  import { fonts } from "../../utils/fonts";
-  import Ionicons from "react-native-vector-icons/Ionicons";
-  import { useNavigation } from "@react-navigation/native";
-  
-  const { width, height } = Dimensions.get("window");
-  
-  const LogInScreen = () => {
-    const navigation = useNavigation();
-      
-    const handleLoginexitoso = () => {
-      navigation.navigate("HomeScreen");
-    };
-  
-    const handleGoBack = () => {
-      navigation.navigate("LogInScreen");
-    };
-  
-    return (
-      <KeyboardAvoidingView
-        style={styles.container}
-        behavior={Platform.OS === "ios" ? "padding" : "height"}
-      >
-        <ScrollView
-          contentContainerStyle={styles.scrollContainer}
-          keyboardShouldPersistTaps="handled"
-        >
-          <TouchableOpacity
-            style={styles.backButtonWrapper}
-            onPress={handleGoBack}
-          >
-            <Ionicons
-              name={"arrow-back-outline"}
-              color={colors.primary}
-              size={25}
-            />
-          </TouchableOpacity>
-  
-          <View style={styles.textContainer}>
-            <Text style={styles.headingText}>Forgot</Text>
-            <Text style={styles.headingText}>Password</Text>
-          </View>
-  
-          <Text style={styles.explanationText}>
-            Please enter your registered email address. We will send you a link to reset your password.
-          </Text>
-  
-          <View style={styles.formContainer}>
-            <View style={styles.inputContainer}>
-              <Ionicons name={"mail-outline"} size={30} color={colors.secondary} />
-              <TextInput
-                style={styles.textInput}
-                placeholder="Enter your email"
-                placeholderTextColor={colors.secondary}
-                keyboardType="email-address"
-              />
-            </View>
-            <TouchableOpacity style={styles.loginButtonWrapper} onPress={handleLoginexitoso}>
-              <Text style={styles.loginText}>Reset Password</Text>
-            </TouchableOpacity>
-          </View>
-        </ScrollView>
-      </KeyboardAvoidingView>
-    );
+  ScrollView,
+  Text,
+  TextInput,
+  TouchableOpacity,
+  View,
+  Dimensions,
+  KeyboardAvoidingView,
+  Platform,
+} from "react-native";
+import React from "react";
+import { colors } from "../../utils/colors";
+import Ionicons from "react-native-vector-icons/Ionicons";
+import { useNavigation } from "@react-navigation/native";
+
+const { width } = Dimensions.get("window");
+
+const ForgotPasswordScreen = () => {
+  const navigation = useNavigation();
+
+  const handleGoBack = () => {
+    navigation.navigate("LogInScreen");
   };
-  
-  export default LogInScreen;
-  
-  const styles = StyleSheet.create({
-    container: {
-      flex: 1,
-      height: '100%',
-    },
-    scrollContainer: {
-      flexGrow: 1,
-      backgroundColor: colors.white,
-      padding: width > 600 ? 50 : 25,
-      alignItems: width > 600 ? "center" : "flex-start",
-      paddingBottom: 30,
-      paddingTop: 40,
-      justifyContent: "center",
-    },
-    textContainer: {
-      marginTop: 10,  
-      marginVertical: 20,
-      alignItems: width > 600 ? "center" : "flex-start",
-    },
-    headingText: {
-      fontSize: width > 600 ? 40 : 32,
-      color: colors.primary,
-      fontFamily: fonts.SemiBold,
-    },
-    explanationText: {
-      marginVertical: 10,
-      fontSize: 16,
-      color: colors.secondary,
-      textAlign: "center",
-      fontFamily: fonts.Regular,
-    },
-    formContainer: {
-      marginTop: 30,
-      width: width > 600 ? "50%" : "100%",
-    },
-    inputContainer: {
-      borderWidth: 1,
-      borderColor: colors.secondary,
-      borderRadius: 100,
-      paddingHorizontal: 20,
-      flexDirection: "row",
-      alignItems: "center",
-      padding: 2,
-      marginVertical: 15,
-    },
-    textInput: {
-      flex: 1,
-      paddingHorizontal: 10,
-      fontFamily: fonts.Light,
-    },
-    loginButtonWrapper: {
-      backgroundColor: colors.primary,
-      borderRadius: 100,
-      marginTop: 40, 
-      padding: 10,
-    },
-    loginText: {
-      color: colors.white,
-      fontSize: width > 600 ? 24 : 20,
-      fontFamily: fonts.SemiBold,
-      textAlign: "center",
-    },
-    backButtonWrapper: {
-      height: 40,
-      width: 40,
-      backgroundColor: colors.gray,
-      borderRadius: 20,
-      justifyContent: "center",
-      alignItems: "center",
-      marginTop: -200,  // Ajustado para mover más arriba
-      alignSelf: "flex-start",
-    },
-  });
-  
+
+  const handlePasswordReset = () => {
+    console.log("Enlace de restablecimiento enviado");
+  };
+
+  return (
+    <KeyboardAvoidingView
+      className="flex-1 bg-[#F4F7FC]"
+      behavior={Platform.OS === "ios" ? "padding" : "height"}
+    >
+      <TouchableOpacity
+        className="h-11 w-11 bg-[#FF6F61] rounded-full justify-center items-center absolute top-20 left-5 z-10"
+        onPress={handleGoBack}
+      >
+        <Ionicons name={"arrow-back-outline"} color={colors.primary} size={25} />
+      </TouchableOpacity>
+
+      <ScrollView
+        contentContainerStyle={{
+          flexGrow: 1,
+          padding: 20,
+          paddingTop: 60, 
+          alignItems: "center",
+          justifyContent: "center",
+        }}
+        keyboardShouldPersistTaps="handled"
+      >
+        <View className="my-5 items-center">
+          <Text className="text-[#3D5A80] text-[32px] font-semibold tracking-wider">
+            Forgot
+          </Text>
+          <Text className="text-[#3D5A80] text-[32px] font-semibold tracking-wider">
+            Password
+          </Text>
+        </View>
+
+        <Text className="my-2 text-center text-[16px] text-[#3D5A80] font-normal">
+          Please enter your registered email address. We will send you a link to
+          reset your password.
+        </Text>
+
+        <View className="mt-5 w-full md:w-1/2">
+          <View className="border border-[#E1E8F1] rounded-full p-5 flex-row items-center mb-4 bg-white">
+            <Ionicons name={"mail-outline"} size={24} color={colors.secondary} />
+            <TextInput
+              className="flex-1 pl-2 text-[#3D5A80] text-[16px] font-light"
+              placeholder="Enter your email"
+              placeholderTextColor={colors.secondary}
+              keyboardType="email-address"
+            />
+          </View>
+
+          <TouchableOpacity
+            className="bg-[#FF6F61] rounded-full mt-5 py-3 shadow-lg shadow-[#FF6F61]"
+            onPress={handlePasswordReset}
+          >
+            <Text className="text-white text-[20px] font-semibold text-center">
+              Reset Password
+            </Text>
+          </TouchableOpacity>
+        </View>
+      </ScrollView>
+    </KeyboardAvoidingView>
+  );
+};
+
+export default ForgotPasswordScreen;

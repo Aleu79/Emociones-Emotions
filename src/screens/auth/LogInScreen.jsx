@@ -29,6 +29,9 @@ const LogInScreen = () => {
   const handleLoginexitoso = () => {
     navigation.navigate("HomeScreen");
   };
+  const handleGoBack = () => {
+    navigation.navigate("InitScreen");
+  };
   const ForgotPasswordScreen = () => {
     navigation.navigate("ForgotPasswordScreen");
   };
@@ -42,6 +45,16 @@ const LogInScreen = () => {
         contentContainerStyle={styles.scrollContainer}
         keyboardShouldPersistTaps="handled"
       >
+        <TouchableOpacity
+          style={styles.backButtonWrapper}
+          onPress={handleGoBack}
+        >
+          <Ionicons
+            name={"arrow-back-outline"}
+            color={colors.primary}
+            size={25}
+          />
+        </TouchableOpacity>
         <View style={styles.textContainer}>
           <Text style={styles.headingText}>Hey, Welcome</Text>
           <Text style={styles.headingText}>Back</Text>
@@ -73,7 +86,7 @@ const LogInScreen = () => {
             </TouchableOpacity>
           </View>
           <TouchableOpacity>
-            <Text style={styles.forgotPasswordText} onPress={ForgotPasswordScreen}>Forgot Password?</Text>
+            <Text style={styles.continueText} onPress={ForgotPasswordScreen}>Forgot Password?</Text>
           </TouchableOpacity>
           <TouchableOpacity style={styles.loginButtonWrapper} onPress={handleLoginexitoso}>
             <Text style={styles.loginText}>Login</Text>
@@ -101,78 +114,96 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     height: '100%',
+    backgroundColor: "#F4F7FC", 
   },
   scrollContainer: {
     flexGrow: 1,
-    backgroundColor: colors.white,
-    padding: width > 600 ? 50 : 25,
-    alignItems: width > 600 ? "center" : "flex-start",
+    padding: width > 100 ? 10 : 25,
+    alignItems: "center",
     paddingBottom: 30,
-    paddingTop: 40,  
-    justifyContent: "center", 
+    justifyContent: "center",
   },
-  forgotPasswordText: {
-    textAlign: "right",
-    color: colors.primary,
-    fontFamily: fonts.SemiBold,
-    marginVertical: 10,
+  backButtonWrapper: {
+    height: 40,
+    width: 40,
+    backgroundColor: "#FF6F61", 
+    borderRadius: 20,
+    justifyContent: "center",
+    alignItems: "center",
+    marginTop: 20,
+    alignSelf: "flex-start",
   },
   textContainer: {
     marginVertical: 20,
-    alignItems: width > 600 ? "center" : "flex-start",
+    alignItems: "center",
   },
   headingText: {
     fontSize: width > 600 ? 40 : 32,
-    color: colors.primary,
+    color: "#3D5A80", 
     fontFamily: fonts.SemiBold,
+    letterSpacing: 3,
   },
   formContainer: {
-    marginTop: 30,  
+    marginTop: 20,
     width: width > 600 ? "50%" : "100%",
   },
   inputContainer: {
     borderWidth: 1,
-    borderColor: colors.secondary,
-    borderRadius: 100,
+    borderColor: "#E1E8F1", 
+    borderRadius: 30, 
     paddingHorizontal: 20,
     flexDirection: "row",
     alignItems: "center",
-    padding: 2,
-    marginVertical: 15,  
+    marginVertical: 15,
+    backgroundColor: "#FFFFFF", 
   },
   textInput: {
     flex: 1,
     paddingHorizontal: 10,
     fontFamily: fonts.Light,
+    fontSize: 16,
+    color: "#3D5A80", 
   },
   loginButtonWrapper: {
-    backgroundColor: colors.primary,
-    borderRadius: 100,
+    backgroundColor: "#FF6F61", 
+    borderRadius: 30,
     marginTop: 20,
-    padding: 10,
+    padding: 12,
+    shadowColor: "#FF6F61",
+    shadowOpacity: 0.2,
+    shadowOffset: { width: 0, height: 5 },
+    shadowRadius: 5,
   },
   loginText: {
-    color: colors.white,
-    fontSize: width > 600 ? 24 : 20,
+    color: "#FFFFFF",
+    fontSize: 18,
     fontFamily: fonts.SemiBold,
     textAlign: "center",
+    textTransform: "uppercase",
   },
   continueText: {
     textAlign: "center",
     marginVertical: 20,
     fontSize: 14,
     fontFamily: fonts.Regular,
-    color: colors.primary,
+    color: "#3D5A80",
+    fontStyle: "italic",
+    letterSpacing: 1,
   },
   googleButtonContainer: {
     flexDirection: "row",
     borderWidth: 2,
-    borderColor: colors.primary,
-    borderRadius: 100,
+    borderColor: "#FF6F61", 
+    borderRadius: 30,
     justifyContent: "center",
     alignItems: "center",
-    padding: 10,
+    padding: 12,
     gap: 10,
+    backgroundColor: "#FFFFFF",
+    shadowColor: "#FF6F61",
+    shadowOpacity: 0.1,
+    shadowOffset: { width: 0, height: 3 },
+    shadowRadius: 5,
   },
   footerContainer: {
     flexDirection: "row",
@@ -180,14 +211,19 @@ const styles = StyleSheet.create({
     alignItems: "center",
     marginVertical: 20,
     gap: 5,
-    paddingBottom: 20,
   },
   accountText: {
-    color: colors.primary,
+    color: "#3D5A80", 
     fontFamily: fonts.Regular,
+    fontSize: 16,
   },
   signupText: {
-    color: colors.primary,
+    color: "#FF6F61", 
     fontFamily: fonts.Bold,
+    fontSize: 18,
+    textDecorationLine: "underline",
+    letterSpacing: 0.5,
+    fontWeight: "900",
   },
 });
+
