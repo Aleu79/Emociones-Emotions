@@ -1,236 +1,262 @@
+import React, { useState } from "react";
 import {
-  ScrollView,
-  Image,
-  StyleSheet,
-  Text,
-  TextInput,
-  TouchableOpacity,
-  View,
-  Dimensions,
   KeyboardAvoidingView,
+  ScrollView,
+  TextInput,
+  Text,
+  View,
+  TouchableOpacity,
   Platform,
 } from "react-native";
-import React, { useState } from "react";  
-import { colors } from "../../utils/colors";
-import { fonts } from "../../utils/fonts";
 import Ionicons from "react-native-vector-icons/Ionicons";
 import SimpleLineIcons from "react-native-vector-icons/SimpleLineIcons";
+import Loading from "../../components/Loading/Loading";
 import { useNavigation } from "@react-navigation/native";
-
-const { width, height } = Dimensions.get("window");
 
 const RegisterScreen = () => {
   const navigation = useNavigation();
   const [secureEntry, setSecureEntry] = useState(true);
+  const [loading, setLoading] = useState(false);
 
-  const handleGoBack = () => {
+  const handleLogin = () => {
     navigation.navigate("LogInScreen");
   };
   const handleLoginexitoso = () => {
-    navigation.navigate("HomeScreen");
+    setLoading(true);
+    setTimeout(() => {
+      setLoading(false);
+      navigation.navigate('HomeScreen');
+    }, 2000); 
   };
-  const handleLogin = () => {
-    navigation.navigate("LogInScreen");
+  const handlegoogle = () => {
+    setLoading(true);
+    setTimeout(() => {
+      setLoading(false);
+      navigation.navigate('HomeScreen');
+    }, 2000); 
+  };
+
+  const handleGoBack = () => {
+    navigation.navigate("InitScreen");
   };
 
   return (
     <KeyboardAvoidingView
-      style={styles.container}
+      style={{ flex: 1, backgroundColor: '#fff' }}
       behavior={Platform.OS === "ios" ? "padding" : "height"}
     >
       <ScrollView
-        contentContainerStyle={styles.scrollContainer}
+        contentContainerStyle={styles.form}
         keyboardShouldPersistTaps="handled"
       >
         <TouchableOpacity
-          style={styles.backButtonWrapper}
+          style={{
+            height: 40,
+            width: 40,
+            backgroundColor: '#FF6F61',
+            borderRadius: 20,
+            alignItems: 'center',
+            justifyContent: 'center',
+            marginTop: 50,
+            alignSelf: 'flex-start',
+            marginLeft: '5%',
+          }}
           onPress={handleGoBack}
         >
-          <Ionicons
-            name={"arrow-back-outline"}
-            color={colors.primary}
-            size={25}
-          />
+          <Ionicons name="chevron-back-outline" color="#000" size={20} />
         </TouchableOpacity>
-        <View style={styles.textContainer}>
-          <Text style={styles.headingText}>Let's get</Text>
-          <Text style={styles.headingText}>started</Text>
+  
+        <View style={{ marginTop: 40, marginBottom: 40, width: '100%' }}>
+          <Text style={styles.title}>Let's get</Text>
+          <Text style={styles.title}>started</Text>
         </View>
-        <View style={styles.formContainer}>
-          <View style={styles.inputContainer}>
-            <Ionicons name={"mail-outline"} size={24} color={colors.secondary} />
-            <TextInput
-              style={styles.textInput}
-              placeholder="Enter your email"
-              placeholderTextColor={colors.secondary}
-              keyboardType="email-address"
-            />
-          </View>
-          <View style={styles.inputContainer}>
-            <SimpleLineIcons name={"lock"} size={24} color={colors.secondary} />
-            <TextInput
-              style={styles.textInput}
-              placeholder="Enter your password"
-              placeholderTextColor={colors.secondary}
-              secureTextEntry={secureEntry}
-            />
-            <TouchableOpacity
-              onPress={() => {
-                setSecureEntry((prev) => !prev);
-              }}
-            >
-              <SimpleLineIcons name={"eye"} size={24} color={colors.secondary} />
-            </TouchableOpacity>
-          </View>
-          <View style={styles.inputContainer}>
-            <SimpleLineIcons
-              name={"screen-smartphone"}
-              size={24}
-              color={colors.secondary}
-            />
-            <TextInput
-              style={styles.textInput}
-              placeholder="Enter your phone no"
-              placeholderTextColor={colors.secondary}
-              keyboardType="phone-pad"
-            />
-          </View>
-          <TouchableOpacity style={styles.loginButtonWrapper} onPress={handleLoginexitoso}>
-            <Text style={styles.loginText}>Sign up</Text>
+  
+        <View style={styles.inputContainer}>
+          <Ionicons name="mail-outline" size={20} color="#6b7280" />
+          <TextInput
+            style={styles.input}
+            placeholder="Enter your email"
+            placeholderTextColor="#6b7280"
+            keyboardType="email-address"
+          />
+        </View>
+  
+        <View style={styles.passwordContainer}>
+          <SimpleLineIcons name="lock" size={20} color="#6b7280" />
+          <TextInput
+            style={styles.input}
+            placeholder="Enter your password"
+            placeholderTextColor="#6b7280"
+            secureTextEntry={secureEntry}
+          />
+          <TouchableOpacity
+            onPress={() => setSecureEntry((prev) => !prev)}
+            style={styles.eyeIcon}
+          >
+            <SimpleLineIcons name="eye" size={20} color="#6b7280" />
           </TouchableOpacity>
-          <Text style={styles.continueText}>or continue with</Text>
-          <TouchableOpacity style={styles.googleButtonContainer}>
-            <Ionicons name="logo-google" size={30} color={colors.primary} />
-            <Text style={styles.googleText}>Google</Text>
+        </View>
+  
+        <View style={styles.inputContainer}>
+          <SimpleLineIcons name="screen-smartphone" size={20} color="#6b7280" />
+          <TextInput
+            style={styles.input}
+            placeholder="Enter your phone no"
+            placeholderTextColor="#6b7280"
+            keyboardType="phone-pad"
+          />
+        </View>
+  
+        <View style={styles.buttonContainer}>
+          <TouchableOpacity
+            style={styles.button}
+            onPress={handleLoginexitoso}
+          >
+            <Text style={styles.buttonText}>Sign up</Text>
+            <View style={styles.registerloadingContainer}>
+              {loading && <Loading />}
+            </View>
           </TouchableOpacity>
-          <View style={styles.footerContainer}>
-            <Text style={styles.accountText}>Already have an account!</Text>
-            <TouchableOpacity onPress={handleLogin}>
-              <Text style={styles.signupText}>Login</Text>
+  
+          <Text style={{ textAlign: 'center', margin: 20, color: '#666' }}>
+            or continue with
+          </Text>
+  
+          <TouchableOpacity style={styles.googleButton} onPress={handlegoogle}>
+            <Ionicons name="logo-google" size={25} color="#FF6F61" />
+            <Text style={styles.googleText}>
+              Google
+            </Text>
+            <View style={styles.loadingContainer}>
+              {loading && <Loading />}
+            </View>
+          </TouchableOpacity>
+  
+          <View style={{ flexDirection: 'row', justifyContent: 'center', alignItems: 'center', marginTop: 20 }}>
+            <Text style={{ color: '#666', fontSize: 16 }}>
+              Already have an account!
+            </Text>
+            <TouchableOpacity onPress={handleLogin} style={{ marginLeft: 8 }}>
+              <Text style={{ color: '#FF6F61', fontSize: 18, fontWeight: 'bold', textDecorationLine: 'underline' }}>
+                Login
+              </Text>
             </TouchableOpacity>
           </View>
         </View>
       </ScrollView>
     </KeyboardAvoidingView>
   );
+  
+};
+const styles = {
+  form: {
+    flex: 1,
+    justifyContent: 'flex-start',
+    alignItems: 'center',
+    paddingHorizontal: 20,
+  },
+  title: {
+    fontSize: 50,
+    fontWeight: 'bold',
+    color: '#000',
+    marginBottom: 8,
+    alignSelf: 'flex-start',
+    marginLeft: '5%',
+  },
+  subtitle: {
+    fontSize: 20,
+    color: '#aaaaaa',
+    marginBottom: 24,
+    alignSelf: 'flex-start',
+    marginLeft: '5%',
+  },
+  inputContainer: {
+    width: '90%',
+    height: 55,
+    flexDirection: 'row',
+    alignItems: 'center',
+    borderColor: '#e6e6e6',
+    borderWidth: 1,
+    borderRadius: 40,
+    paddingHorizontal: 16,
+    fontSize: 17,
+    marginBottom: 16,
+    backgroundColor: '#f5f5f5',
+  },
+  registerloadingContainer: {
+    position: 'absolute',  
+    right: 10,             
+    top: '95%',            
+    transform: [{ translateY: -20 }] 
+  },  
+  loadingContainer: {
+    position: 'absolute',  
+    right: 10,             
+    top: '90%',            
+    transform: [{ translateY: -20 }] 
+  },  
+  input: {
+    flex: 1,
+    height: 55,
+    fontSize: 17,
+    marginLeft: 10,
+    backgroundColor: 'transparent',
+  },
+  passwordContainer: {
+    width: '90%',
+    height: 55,
+    flexDirection: 'row',
+    alignItems: 'center',
+    borderColor: '#e6e6e6',
+    borderWidth: 1,
+    borderRadius: 40,
+    backgroundColor: '#f5f5f5',
+    paddingHorizontal: 16,
+    marginBottom: 16,
+  },
+  eyeIcon: {
+    padding: 8,
+  },
+
+  buttonContainer: {
+    width: '90%',
+    marginTop: 20,
+  },
+  button: {
+    backgroundColor: '#FF6F61',
+    borderRadius: 40,
+    padding: 15,
+    alignItems: 'center',
+    shadowColor: '#000',
+    shadowOffset: {
+      width: 0,
+      height: 2,
+    },
+    shadowOpacity: 0.25,
+    shadowRadius: 3.84,
+    elevation: 5,
+  },
+  buttonText: {
+    color: '#fff',
+    fontSize: 18,
+    fontWeight: 'bold',
+    textTransform: 'uppercase',
+  },
+  googleButton: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center',
+    borderWidth: 2,
+    borderColor: '#FF6F61',
+    borderRadius: 40,
+    padding: 12,
+  },
+  googleText: {
+    marginLeft: 8,
+    color: '#FF6F61',
+    fontSize: 18,
+    fontWeight: '600',
+  }
 };
 
 export default RegisterScreen;
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    height: '100%',
-    backgroundColor: "#F4F7FC", 
-  },
-  scrollContainer: {
-    flexGrow: 1,
-    padding: width > 100 ? 10 : 25,
-    alignItems: "center",
-    paddingBottom: 30,
-    justifyContent: "center",
-  },
-  backButtonWrapper: {
-    height: 40,
-    width: 40,
-    backgroundColor: "#FF6F61", 
-    borderRadius: 20,
-    justifyContent: "center",
-    alignItems: "center",
-    marginTop: 20,
-    alignSelf: "flex-start",
-  },
-  textContainer: {
-    marginVertical: 20,
-    alignItems: "center",
-  },
-  headingText: {
-    fontSize: width > 600 ? 40 : 32,
-    color: "#3D5A80", 
-    fontFamily: fonts.SemiBold,
-    letterSpacing: 3,
-  },
-  formContainer: {
-    marginTop: 20,
-    width: width > 600 ? "50%" : "100%",
-  },
-  inputContainer: {
-    borderWidth: 1,
-    borderColor: "#E1E8F1", 
-    borderRadius: 30, 
-    paddingHorizontal: 20,
-    flexDirection: "row",
-    alignItems: "center",
-    marginVertical: 15,
-    backgroundColor: "#FFFFFF", 
-  },
-  textInput: {
-    flex: 1,
-    paddingHorizontal: 10,
-    fontFamily: fonts.Light,
-    fontSize: 16,
-    color: "#3D5A80", 
-  },
-  loginButtonWrapper: {
-    backgroundColor: "#FF6F61", 
-    borderRadius: 30,
-    marginTop: 20,
-    padding: 12,
-    shadowColor: "#FF6F61",
-    shadowOpacity: 0.2,
-    shadowOffset: { width: 0, height: 5 },
-    shadowRadius: 5,
-  },
-  loginText: {
-    color: "#FFFFFF",
-    fontSize: 18,
-    fontFamily: fonts.SemiBold,
-    textAlign: "center",
-    textTransform: "uppercase",
-  },
-  continueText: {
-    textAlign: "center",
-    marginVertical: 20,
-    fontSize: 14,
-    fontFamily: fonts.Regular,
-    color: "#3D5A80",
-    fontStyle: "italic",
-    letterSpacing: 1,
-  },
-  googleButtonContainer: {
-    flexDirection: "row",
-    borderWidth: 2,
-    borderColor: "#FF6F61", 
-    borderRadius: 30,
-    justifyContent: "center",
-    alignItems: "center",
-    padding: 12,
-    gap: 10,
-    backgroundColor: "#FFFFFF",
-    shadowColor: "#FF6F61",
-    shadowOpacity: 0.1,
-    shadowOffset: { width: 0, height: 3 },
-    shadowRadius: 5,
-  },
-  footerContainer: {
-    flexDirection: "row",
-    justifyContent: "center",
-    alignItems: "center",
-    marginVertical: 20,
-    gap: 5,
-  },
-  accountText: {
-    color: "#3D5A80", 
-    fontFamily: fonts.Regular,
-    fontSize: 16,
-  },
-  signupText: {
-    color: "#FF6F61", 
-    fontFamily: fonts.Bold,
-    fontSize: 18,
-    textDecorationLine: "underline",
-    letterSpacing: 0.5,
-    fontWeight: "900",
-  },
-});
-

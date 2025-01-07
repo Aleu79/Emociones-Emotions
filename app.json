@@ -4,10 +4,10 @@
     "entryPoint": "./src/App.jsx",
     "scheme": "acme",
     "orientation": "portrait",
-    "icon": "./assets/ClassPlanner.png",
+    "icon": "./src/logo.png",
     "userInterfaceStyle": "light",
     "splash": {
-      "image": "./assets/ClassPlanner.png",
+      "image": "./src/logo.png",
       "resizeMode": "contain",
       "backgroundColor": "#f5f5f5"
     },
@@ -17,7 +17,7 @@
     "plugins": [
       "expo-router"
     ],
-    "name": "classplanner-mobile",
-    "slug": "classplanner-mobile"
+    "name": "emotions-mobile",
+    "slug": "emotions-mobile"
   }
 }

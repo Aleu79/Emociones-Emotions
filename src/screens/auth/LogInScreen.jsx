@@ -1,23 +1,16 @@
 import {
   ScrollView,
-  Image,
-  StyleSheet,
   Text,
   TextInput,
   TouchableOpacity,
   View,
-  Dimensions,
   KeyboardAvoidingView,
   Platform,
 } from "react-native";
-import React, { useState } from "react";  
-import { colors } from "../../utils/colors";
-import { fonts } from "../../utils/fonts";
+import React, { useState } from "react";
 import Ionicons from "react-native-vector-icons/Ionicons";
 import SimpleLineIcons from "react-native-vector-icons/SimpleLineIcons";
 import { useNavigation } from "@react-navigation/native";
-
-const { width, height } = Dimensions.get("window");
 
 const LogInScreen = () => {
   const navigation = useNavigation();
@@ -38,68 +31,67 @@ const LogInScreen = () => {
 
   return (
     <KeyboardAvoidingView
-      style={styles.container}
+      className="flex-1 bg-gray-100"
       behavior={Platform.OS === "ios" ? "padding" : "height"}
     >
       <ScrollView
-        contentContainerStyle={styles.scrollContainer}
-        keyboardShouldPersistTaps="handled"
+       contentContainerStyle={{
+        flexGrow: 1,
+        justifyContent: "center",
+      }}
+      keyboardShouldPersistTaps="handled"
+      className="px-5 pb-8"
       >
         <TouchableOpacity
-          style={styles.backButtonWrapper}
+          className="h-10 w-10 bg-primary rounded-full justify-center items-center"
           onPress={handleGoBack}
         >
-          <Ionicons
-            name={"arrow-back-outline"}
-            color={colors.primary}
-            size={25}
-          />
+          <Ionicons name="arrow-back-outline" size={25} color="white" />
         </TouchableOpacity>
-        <View style={styles.textContainer}>
-          <Text style={styles.headingText}>Hey, Welcome</Text>
-          <Text style={styles.headingText}>Back</Text>
+        <View className="my-6 items-center">
+          <Text className="text-3xl font-semibold text-primary">Hey, Welcome</Text>
+          <Text className="text-3xl font-semibold text-primary">Back</Text>
         </View>
-        <View style={styles.formContainer}>
-          <View style={styles.inputContainer}>
-            <Ionicons name={"mail-outline"} size={30} color={colors.secondary} />
+        <View className="mt-4 w-full">
+          <View className="flex-row items-center border border-gray-300 bg-white rounded-full px-5 py-3 mb-4">
+            <Ionicons name="mail-outline" size={24} color="#6B7280" />
             <TextInput
-              style={styles.textInput}
+              className="flex-1 ml-3 text-base text-gray-800"
               placeholder="Enter your email"
-              placeholderTextColor={colors.secondary}
+              placeholderTextColor="#9CA3AF"
               keyboardType="email-address"
             />
           </View>
-          <View style={styles.inputContainer}>
-            <SimpleLineIcons name={"lock"} size={30} color={colors.secondary} />
+          <View className="flex-row items-center border border-gray-300 bg-white rounded-full px-5 py-3 mb-4">
+            <SimpleLineIcons name="lock" size={24} color="#6B7280" />
             <TextInput
-              style={styles.textInput}
+              className="flex-1 ml-3 text-base text-gray-800"
               placeholder="Enter your password"
-              placeholderTextColor={colors.secondary}
+              placeholderTextColor="#9CA3AF"
               secureTextEntry={secureEntry}
             />
-            <TouchableOpacity
-              onPress={() => {
-                setSecureEntry((prev) => !prev);
-              }}
-            >
-              <SimpleLineIcons name={"eye"} size={20} color={colors.secondary} />
+            <TouchableOpacity onPress={() => setSecureEntry((prev) => !prev)}>
+              <SimpleLineIcons name="eye" size={20} color="#6B7280" />
             </TouchableOpacity>
           </View>
-          <TouchableOpacity>
-            <Text style={styles.continueText} onPress={ForgotPasswordScreen}>Forgot Password?</Text>
+          <TouchableOpacity onPress={ForgotPasswordScreen}>
+            <Text className="text-sm text-center text-primary italic">Forgot Password?</Text>
           </TouchableOpacity>
-          <TouchableOpacity style={styles.loginButtonWrapper} onPress={handleLoginexitoso}>
-            <Text style={styles.loginText}>Login</Text>
+          <TouchableOpacity
+            className="bg-primary rounded-full mt-5 py-3 shadow-lg"
+            onPress={handleLoginexitoso}
+          >
+            <Text className="text-center text-white text-lg font-semibold uppercase">Login</Text>
           </TouchableOpacity>
-          <Text style={styles.continueText}>or continue with</Text>
-          <TouchableOpacity style={styles.googleButtonContainer}>
-            <Ionicons name="logo-google" size={24} color={colors.primary} />
-            <Text style={styles.googleText}>Google</Text>
+          <Text className="text-sm text-center text-gray-600 italic my-5">or continue with</Text>
+          <TouchableOpacity className="flex-row items-center justify-center border-2 border-primary rounded-full py-3 bg-white shadow-sm">
+            <Ionicons name="logo-google" size={24} color="#FF6F61" />
+            <Text className="ml-2 text-primary font-medium">Google</Text>
           </TouchableOpacity>
-          <View style={styles.footerContainer}>
-            <Text style={styles.accountText}>Don’t have an account?</Text>
+          <View className="flex-row justify-center items-center mt-6">
+            <Text className="text-gray-600">Don’t have an account?</Text>
             <TouchableOpacity onPress={handleLogin}>
-              <Text style={styles.signupText}>Sign Up</Text>
+              <Text className="text-primary font-bold text-base ml-1 underline">Sign Up</Text>
             </TouchableOpacity>
           </View>
         </View>
@@ -109,121 +101,3 @@ const LogInScreen = () => {
 };
 
 export default LogInScreen;
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    height: '100%',
-    backgroundColor: "#F4F7FC", 
-  },
-  scrollContainer: {
-    flexGrow: 1,
-    padding: width > 100 ? 10 : 25,
-    alignItems: "center",
-    paddingBottom: 30,
-    justifyContent: "center",
-  },
-  backButtonWrapper: {
-    height: 40,
-    width: 40,
-    backgroundColor: "#FF6F61", 
-    borderRadius: 20,
-    justifyContent: "center",
-    alignItems: "center",
-    marginTop: 20,
-    alignSelf: "flex-start",
-  },
-  textContainer: {
-    marginVertical: 20,
-    alignItems: "center",
-  },
-  headingText: {
-    fontSize: width > 600 ? 40 : 32,
-    color: "#3D5A80", 
-    fontFamily: fonts.SemiBold,
-    letterSpacing: 3,
-  },
-  formContainer: {
-    marginTop: 20,
-    width: width > 600 ? "50%" : "100%",
-  },
-  inputContainer: {
-    borderWidth: 1,
-    borderColor: "#E1E8F1", 
-    borderRadius: 30, 
-    paddingHorizontal: 20,
-    flexDirection: "row",
-    alignItems: "center",
-    marginVertical: 15,
-    backgroundColor: "#FFFFFF", 
-  },
-  textInput: {
-    flex: 1,
-    paddingHorizontal: 10,
-    fontFamily: fonts.Light,
-    fontSize: 16,
-    color: "#3D5A80", 
-  },
-  loginButtonWrapper: {
-    backgroundColor: "#FF6F61", 
-    borderRadius: 30,
-    marginTop: 20,
-    padding: 12,
-    shadowColor: "#FF6F61",
-    shadowOpacity: 0.2,
-    shadowOffset: { width: 0, height: 5 },
-    shadowRadius: 5,
-  },
-  loginText: {
-    color: "#FFFFFF",
-    fontSize: 18,
-    fontFamily: fonts.SemiBold,
-    textAlign: "center",
-    textTransform: "uppercase",
-  },
-  continueText: {
-    textAlign: "center",
-    marginVertical: 20,
-    fontSize: 14,
-    fontFamily: fonts.Regular,
-    color: "#3D5A80",
-    fontStyle: "italic",
-    letterSpacing: 1,
-  },
-  googleButtonContainer: {
-    flexDirection: "row",
-    borderWidth: 2,
-    borderColor: "#FF6F61", 
-    borderRadius: 30,
-    justifyContent: "center",
-    alignItems: "center",
-    padding: 12,
-    gap: 10,
-    backgroundColor: "#FFFFFF",
-    shadowColor: "#FF6F61",
-    shadowOpacity: 0.1,
-    shadowOffset: { width: 0, height: 3 },
-    shadowRadius: 5,
-  },
-  footerContainer: {
-    flexDirection: "row",
-    justifyContent: "center",
-    alignItems: "center",
-    marginVertical: 20,
-    gap: 5,
-  },
-  accountText: {
-    color: "#3D5A80", 
-    fontFamily: fonts.Regular,
-    fontSize: 16,
-  },
-  signupText: {
-    color: "#FF6F61", 
-    fontFamily: fonts.Bold,
-    fontSize: 18,
-    textDecorationLine: "underline",
-    letterSpacing: 0.5,
-    fontWeight: "900",
-  },
-});
-
