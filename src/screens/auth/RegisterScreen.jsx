@@ -11,10 +11,13 @@ import Ionicons from "react-native-vector-icons/Ionicons";
 import Loading from "../../components/Loading/Loading";
 import { useNavigation } from "@react-navigation/native";
 import CustomInput from "../../components/Common/CustomInput";
+import { useLanguage } from "../../context/LanguageContext";
 
 const RegisterScreen = () => {
   const navigation = useNavigation();
   const [loading, setLoading] = useState(false);
+  const { translate} = useLanguage(); 
+
 
   const handleLogin = () => {
     navigation.navigate("LogInScreen");
@@ -58,22 +61,22 @@ const RegisterScreen = () => {
         </TouchableOpacity>
 
         <View style={styles.headerContainer}>
-          <Text style={styles.title}>Let's get</Text>
-          <Text style={styles.title}>started</Text>
+          <Text style={styles.title}>{translate("welcomeregister")}</Text>
+          <Text style={styles.title}>{translate("welcomeregisterstart")}</Text>
         </View>
 
         <CustomInput
           iconNameSimple="user"
-          placeholder="Enter your username"
+          placeholder={translate("enterusername")}
         />
         <CustomInput
           iconNameIocons="mail-outline"
-          placeholder="Enter your email"
+          placeholder={translate("enterEmail")}
           keyboardType="email-address"
         />
         <CustomInput
           iconNameIocons="lock-closed-outline"
-          placeholder="Enter your password"
+          placeholder={translate("enterPassword")}
           secureTextEntry={true}
           onPressEye={() => console.log("Eye pressed")}
         />
@@ -83,13 +86,13 @@ const RegisterScreen = () => {
             style={styles.button}
             onPress={handleLoginexitoso}
           >
-            <Text style={styles.buttonText}>Sign up</Text>
+            <Text style={styles.buttonText}>{translate("signup")}</Text>
             <View style={styles.registerloadingContainer}>
               {loading && <Loading />}
             </View>
           </TouchableOpacity>
 
-          <Text style={styles.orText}>or continue with</Text>
+          <Text style={styles.orText}>{translate("orcontinue")}</Text>
 
           <View style={styles.socialButtons}>
             <TouchableOpacity style={styles.googleButton} onPress={handlegoogle}>
@@ -102,9 +105,9 @@ const RegisterScreen = () => {
           </View>
 
           <View style={styles.footerContainer}>
-            <Text style={styles.footerText}>Already have an account!</Text>
+            <Text style={styles.footerText}>{translate("alreadyhave")}</Text>
             <TouchableOpacity onPress={handleLogin} style={styles.loginLink}>
-              <Text style={styles.loginText}>Login</Text>
+              <Text style={styles.loginText}>{translate("login")}</Text>
             </TouchableOpacity>
           </View>
         </View>
@@ -152,21 +155,26 @@ const styles = {
     backgroundColor: "#FF6F61",
     borderRadius: 40,
     padding: 15,
+    width: "90%",
     alignItems: "center",
     shadowColor: "#000",
-    shadowOffset: {
-      width: 0,
-      height: 2,
-    },
+    shadowOffset: { width: 0, height: 2 },
     shadowOpacity: 0.25,
     shadowRadius: 3.84,
-    elevation: 5,
+    elevation: 1,
+    alignSelf: "center",
   },
   buttonText: {
     color: "#fff",
     fontSize: 18,
     fontWeight: "bold",
     textTransform: "uppercase",
+  },
+  registerloadingContainer: {
+    position: "absolute",
+    right: 10,
+    top: "100%",
+    transform: [{ translateY: -20 }],
   },
   googleButton: {
     flexDirection: "row",

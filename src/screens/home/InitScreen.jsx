@@ -1,11 +1,16 @@
-import { Image, StyleSheet, Text, TouchableOpacity, View } from "react-native";
+import { Image, StyleSheet, Text, TouchableOpacity, View, Dimensions } from "react-native";
 import React from "react";
 import { colors } from "../../utils/colors"; 
 import { fonts } from "../../utils/fonts";
 import { useNavigation } from "@react-navigation/native";
+import { useLanguage } from "../../context/LanguageContext";
+
+const screenWidth = Dimensions.get('window').width; // Ancho de la pantalla
+const screenHeight = Dimensions.get('window').height; // Alto de la pantalla
 
 const InitScreen = () => {
   const navigation = useNavigation();
+  const { toggleLanguage, translate, language } = useLanguage(); 
 
   const handleLogin = () => {
     navigation.navigate("LogInScreen");
@@ -17,27 +22,32 @@ const InitScreen = () => {
 
   return (
     <View style={styles.container}>
-      <Image source={require("../../../assets/logo.png")} style={styles.logo} />
+      <TouchableOpacity onPress={toggleLanguage} style={styles.languageButton}>
+        <Image 
+          source={language === 'en' ? require('../../../assets/ar.png') : require('../../../assets/uk.png')} // Cambia la ruta de las imágenes según corresponda
+          style={styles.languageIcon}
+        />
+        <Text style={styles.languageButtonText}>
+          {language === 'en' ? 'Switch to Español' : 'Cambiar a English'}
+        </Text>
+      </TouchableOpacity>
       <Image source={require("../../../assets/man.png")} style={styles.bannerImage} />
-      <Text style={styles.title}>Welcome to Emotions</Text>
+      <Text style={styles.title}>{translate("welcome")}</Text>
       <Text style={styles.subTitle}>
-        Emotions is a social network designed for users to express and share their daily emotions through posts categorized by emotional states (happiness, sadness, anger, etc.)
+        {translate("descripcion")}
       </Text>
       <View style={styles.buttonContainer}>
         <TouchableOpacity
-          style={[
-            styles.loginButtonWrapper,
-            { backgroundColor: "#FF6F61" }, 
-          ]}
+          style={[styles.loginButtonWrapper, { backgroundColor: "#FF6F61" }]}
           onPress={handleLogin}
         >
-          <Text style={styles.loginButtonText}>Login</Text>
+          <Text style={styles.loginButtonText}>{translate("login")}</Text>
         </TouchableOpacity>
         <TouchableOpacity
           style={styles.signupButtonWrapper} 
           onPress={handleSignup}
         >
-          <Text style={styles.signupButtonText}>Sign-up</Text>
+          <Text style={styles.signupButtonText}>{translate("signup")}</Text>
         </TouchableOpacity>
       </View>
     </View>
@@ -52,7 +62,7 @@ const styles = StyleSheet.create({
     backgroundColor: "#F4F7FC",
     alignItems: "center",
     justifyContent: "flex-start",
-    paddingTop: 30,
+    paddingTop: screenHeight * 0.05, // Usamos un porcentaje del alto de la pantalla
   },
   logo: {
     height: 40,
@@ -60,12 +70,12 @@ const styles = StyleSheet.create({
     marginVertical: 10,
   },
   bannerImage: {
-    marginVertical: 20,
-    height: 250,
-    width: 231,
+    marginVertical: screenHeight * 0.03, // Usamos porcentaje del alto de la pantalla
+    height: screenHeight * 0.3, // 30% de la altura de la pantalla
+    width: screenWidth * 0.6, // 60% del ancho de la pantalla
   },
   title: {
-    fontSize: 40,
+    fontSize: screenWidth * 0.1, // 10% del ancho de la pantalla
     fontFamily: fonts.SemiBold,
     paddingHorizontal: 20,
     textAlign: "center",
@@ -73,7 +83,7 @@ const styles = StyleSheet.create({
     marginTop: 40,
   },
   subTitle: {
-    fontSize: 18,
+    fontSize: screenWidth * 0.05, // 5% del ancho de la pantalla
     paddingHorizontal: 20,
     textAlign: "center",
     color: "#3D5A80", 
@@ -101,7 +111,7 @@ const styles = StyleSheet.create({
   },
   loginButtonText: {
     color: "#FFFFFF", 
-    fontSize: 18,
+    fontSize: screenWidth * 0.05, // 5% del ancho de la pantalla
     fontFamily: fonts.SemiBold,
   },
   signupButtonWrapper: {
@@ -120,7 +130,29 @@ const styles = StyleSheet.create({
   },
   signupButtonText: {
     color: "#FF6F61", 
-    fontSize: 18,
+    fontSize: screenWidth * 0.05, // 5% del ancho de la pantalla
     fontFamily: fonts.SemiBold,
   },
+  languageButton: {
+    marginTop: 20,
+    padding: 10,
+    backgroundColor: "#F8F8F8", // Fondo más claro
+    borderRadius: 30,
+    flexDirection: 'row', // Alineamos el icono y el texto
+    alignItems: 'center', // Centrado del contenido
+    borderWidth: 1, // Le agregué un borde sutil
+    borderColor: '#DDDDDD', // Color del borde
+  },
+  languageButtonText: {
+    color: "#333333", // Color de texto más oscuro para contraste
+    fontSize: screenWidth * 0.04, // 4% del ancho de la pantalla
+    fontFamily: fonts.SemiBold,
+    marginLeft: 10, // Espaciado entre la imagen y el texto
+  },
+  languageIcon: {
+    width: 20, // Tamaño de la bandera
+    height: 20,
+    marginRight: 10, // Espaciado entre la imagen y el texto
+  },
+
 });

@@ -12,11 +12,13 @@ import React from "react";
 import { colors } from "../../utils/colors";
 import Ionicons from "react-native-vector-icons/Ionicons";
 import { useNavigation } from "@react-navigation/native";
+import { useLanguage } from "../../context/LanguageContext";
 
 const { width } = Dimensions.get("window");
 
 const ForgotPasswordScreen = () => {
   const navigation = useNavigation();
+  const { translate} = useLanguage(); 
 
   const handleGoBack = () => {
     navigation.navigate("LogInScreen");
@@ -50,16 +52,15 @@ const ForgotPasswordScreen = () => {
       >
         <View className="my-5 items-center">
           <Text className="text-[#3D5A80] text-[32px] font-semibold tracking-wider">
-            Forgot
+            {translate("forgot")}
           </Text>
           <Text className="text-[#3D5A80] text-[32px] font-semibold tracking-wider">
-            Password
+            {translate("password")}
           </Text>
         </View>
 
         <Text className="my-2 text-center text-[16px] text-[#3D5A80] font-normal">
-          Please enter your registered email address. We will send you a link to
-          reset your password.
+            {translate("descripciondeforgot")}
         </Text>
 
         <View className="mt-5 w-full md:w-1/2">
@@ -67,7 +68,7 @@ const ForgotPasswordScreen = () => {
             <Ionicons name={"mail-outline"} size={24} color={colors.secondary} />
             <TextInput
               className="flex-1 pl-2 text-[#3D5A80] text-[16px] font-light"
-              placeholder="Enter your email"
+              placeholder={translate("enterEmail")}
               placeholderTextColor={colors.secondary}
               keyboardType="email-address"
             />
@@ -78,7 +79,7 @@ const ForgotPasswordScreen = () => {
             onPress={handlePasswordReset}
           >
             <Text className="text-white text-[20px] font-semibold text-center">
-              Reset Password
+              {translate("resetPassword")}
             </Text>
           </TouchableOpacity>
         </View>
