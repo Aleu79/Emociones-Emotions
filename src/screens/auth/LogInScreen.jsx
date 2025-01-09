@@ -9,18 +9,23 @@ import {
 } from "react-native";
 import React, { useState } from "react";
 import Ionicons from "react-native-vector-icons/Ionicons";
-import SimpleLineIcons from "react-native-vector-icons/SimpleLineIcons";
 import { useNavigation } from "@react-navigation/native";
+import Loading from "../../components/Loading/Loading"; 
+import CustomInput from "../../components/Common/CustomInput";
 
 const LogInScreen = () => {
   const navigation = useNavigation();
-  const [secureEntry, setSecureEntry] = useState(true);
+  const [loading, setLoading] = useState(false);
 
   const handleLogin = () => {
     navigation.navigate("RegisterScreen");
   };
   const handleLoginexitoso = () => {
-    navigation.navigate("HomeScreen");
+    setLoading(true);
+    setTimeout(() => {
+      setLoading(false);
+      navigation.navigate("HomeScreen");
+    }, 2000); 
   };
   const handleGoBack = () => {
     navigation.navigate("InitScreen");
@@ -31,73 +36,153 @@ const LogInScreen = () => {
 
   return (
     <KeyboardAvoidingView
-      className="flex-1 bg-gray-100"
+      style={{ flex: 1, backgroundColor: '#fff' }}
       behavior={Platform.OS === "ios" ? "padding" : "height"}
     >
       <ScrollView
-       contentContainerStyle={{
-        flexGrow: 1,
-        justifyContent: "center",
-      }}
-      keyboardShouldPersistTaps="handled"
-      className="px-5 pb-8"
+        contentContainerStyle={{
+          flexGrow: 1,
+          justifyContent: "center",
+        }}
+        keyboardShouldPersistTaps="handled"
+        style={{ paddingHorizontal: 20, paddingBottom: 20 }}
       >
         <TouchableOpacity
-          className="h-10 w-10 bg-primary rounded-full justify-center items-center"
+          style={{
+            height: 40,
+            width: 40,
+            backgroundColor: '#FF6F61',
+            borderRadius: 20,
+            alignItems: 'center',
+            justifyContent: 'center',
+            marginTop: 50,
+            alignSelf: 'flex-start',
+            marginLeft: '5%',
+          }}
           onPress={handleGoBack}
         >
-          <Ionicons name="arrow-back-outline" size={25} color="white" />
+          <Ionicons name="chevron-back-outline" color="#000" size={20} />
         </TouchableOpacity>
-        <View className="my-6 items-center">
-          <Text className="text-3xl font-semibold text-primary">Hey, Welcome</Text>
-          <Text className="text-3xl font-semibold text-primary">Back</Text>
+        
+        <View style={{ marginTop: 40, marginBottom: 10, width: '100%' }}>
+          <Text style={{ fontSize: 50, fontWeight: 'bold', color: '#000', marginBottom: 8, alignSelf: 'flex-start', marginLeft: '5%' }}>
+            Hey, Welcome
+          </Text>
+          <Text style={{ fontSize: 50, fontWeight: 'bold', color: '#000', marginBottom: 8, alignSelf: 'flex-start', marginLeft: '5%' }}>
+            Back
+          </Text>
         </View>
-        <View className="mt-4 w-full">
-          <View className="flex-row items-center border border-gray-300 bg-white rounded-full px-5 py-3 mb-4">
-            <Ionicons name="mail-outline" size={24} color="#6B7280" />
-            <TextInput
-              className="flex-1 ml-3 text-base text-gray-800"
-              placeholder="Enter your email"
-              placeholderTextColor="#9CA3AF"
-              keyboardType="email-address"
-            />
-          </View>
-          <View className="flex-row items-center border border-gray-300 bg-white rounded-full px-5 py-3 mb-4">
-            <SimpleLineIcons name="lock" size={24} color="#6B7280" />
-            <TextInput
-              className="flex-1 ml-3 text-base text-gray-800"
-              placeholder="Enter your password"
-              placeholderTextColor="#9CA3AF"
-              secureTextEntry={secureEntry}
-            />
-            <TouchableOpacity onPress={() => setSecureEntry((prev) => !prev)}>
-              <SimpleLineIcons name="eye" size={20} color="#6B7280" />
+
+        <View style={{ marginBottom: 20 }}>
+          <CustomInput
+            iconNameSimple="user"
+            placeholder="Enter your username"
+          />
+          <CustomInput
+            iconNameIocons="lock-closed-outline"
+            placeholder="Enter your password"
+            secureTextEntry={true}
+            onPressEye={() => console.log("Eye pressed")}
+          />
+          <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center', marginVertical: 20 }}>
+            <TouchableOpacity onPress={ForgotPasswordScreen}>
+              <Text style={{ color: '#FF6F61' }}>
+                Forgot Password?
+              </Text>
             </TouchableOpacity>
           </View>
-          <TouchableOpacity onPress={ForgotPasswordScreen}>
-            <Text className="text-sm text-center text-primary italic">Forgot Password?</Text>
-          </TouchableOpacity>
+
           <TouchableOpacity
-            className="bg-primary rounded-full mt-5 py-3 shadow-lg"
+            style={styles.button}
             onPress={handleLoginexitoso}
           >
-            <Text className="text-center text-white text-lg font-semibold uppercase">Login</Text>
+            <Text style={styles.buttonText}>Login</Text>
+            <View style={styles.loadingContainer}>
+              {loading && <Loading />}
+            </View>
           </TouchableOpacity>
-          <Text className="text-sm text-center text-gray-600 italic my-5">or continue with</Text>
-          <TouchableOpacity className="flex-row items-center justify-center border-2 border-primary rounded-full py-3 bg-white shadow-sm">
-            <Ionicons name="logo-google" size={24} color="#FF6F61" />
-            <Text className="ml-2 text-primary font-medium">Google</Text>
-          </TouchableOpacity>
-          <View className="flex-row justify-center items-center mt-6">
-            <Text className="text-gray-600">Don’t have an account?</Text>
-            <TouchableOpacity onPress={handleLogin}>
-              <Text className="text-primary font-bold text-base ml-1 underline">Sign Up</Text>
+
+          <Text style={{ textAlign: 'center', margin: 20, color: '#666' }}>
+            or continue with
+          </Text>
+
+          <View style={{ flexDirection: 'row', justifyContent: 'center', alignItems: 'center' }}>
+            <TouchableOpacity style={styles.socialButton}>
+              <Ionicons name="logo-google" size={25} color="#FF6F61" />
+            </TouchableOpacity>
+
+            <TouchableOpacity style={styles.socialButton}>
+              <Ionicons name="logo-github" size={25} color="#FF6F61" />
+            </TouchableOpacity>
+          </View>
+
+          <View style={styles.footerContainer}>
+            <Text style={styles.footerText}>Already have an account!</Text>
+            <TouchableOpacity onPress={handleLogin} style={styles.loginLink}>
+              <Text style={styles.loginText}>Sign up</Text>
             </TouchableOpacity>
           </View>
         </View>
       </ScrollView>
     </KeyboardAvoidingView>
   );
+};
+
+const styles = {
+  button: {
+    backgroundColor: '#FF6F61',
+    borderRadius: 40,
+    padding: 15,
+    width: '90%', 
+    alignItems: 'center',
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.25,
+    shadowRadius: 3.84,
+    elevation: 1,
+    alignSelf: 'center', 
+  },
+  buttonText: {
+    color: '#fff',
+    fontSize: 18,
+    fontWeight: 'bold',
+    textTransform: 'uppercase',
+  },
+  socialButton: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center',
+    borderWidth: 2,
+    borderColor: '#FF6F61',
+    borderRadius: 40,
+    padding: 12,
+    marginHorizontal: 10,
+  },
+  loadingContainer: {
+    position: 'absolute',
+    right: 10,
+    top: '95%',
+    transform: [{ translateY: -20 }],
+  },
+  footerContainer: {
+    flexDirection: "row",
+    justifyContent: "center",
+    alignItems: "center",
+    marginTop: 20,
+  },
+  footerText: {
+    color: "#666",
+    fontSize: 16,
+  },
+  loginLink: {
+    marginLeft: 8,
+  },
+  loginText: {
+    color: "#FF6F61",
+    fontSize: 18,
+    fontWeight: "bold",
+    textDecorationLine: "underline",
+  },
 };
 
 export default LogInScreen;
