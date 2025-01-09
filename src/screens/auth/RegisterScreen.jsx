@@ -6,37 +6,40 @@ import {
   View,
   TouchableOpacity,
   Platform,
+  Alert,
 } from "react-native";
 import Ionicons from "react-native-vector-icons/Ionicons";
-import Loading from "../../components/Loading/Loading";
 import { useNavigation } from "@react-navigation/native";
+import { useUser } from "../../context/UserContext";
 import CustomInput from "../../components/Common/CustomInput";
 import { useLanguage } from "../../context/LanguageContext";
+import Loading from "../../components/Loading/Loading";
 
 const RegisterScreen = () => {
   const navigation = useNavigation();
+  const { registerUser } = useUser();
   const [loading, setLoading] = useState(false);
-  const { translate} = useLanguage(); 
+  const { translate } = useLanguage();
+  const [user, setUser] = useState('');
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [errorMessage, setErrorMessage] = useState('');  
 
+  const handleRegister = async () => {
+    setLoading(true); 
+    setErrorMessage(""); 
+    try {
+      await registerUser(email, password); 
+    } catch (error) {
+      setErrorMessage(error.message);
+    } finally {
+      setLoading(false);
+    }
+  };
+  
 
   const handleLogin = () => {
     navigation.navigate("LogInScreen");
-  };
-
-  const handleLoginexitoso = () => {
-    setLoading(true);
-    setTimeout(() => {
-      setLoading(false);
-      navigation.navigate("HomeScreen");
-    }, 2000);
-  };
-
-  const handlegoogle = () => {
-    setLoading(true);
-    setTimeout(() => {
-      setLoading(false);
-      navigation.navigate("HomeScreen");
-    }, 2000);
   };
 
   const handleGoBack = () => {
@@ -51,7 +54,7 @@ const RegisterScreen = () => {
       <ScrollView
         contentContainerStyle={styles.form}
         keyboardShouldPersistTaps="handled"
-        showsVerticalScrollIndicator={false}  
+        showsVerticalScrollIndicator={false}
       >
         <TouchableOpacity
           style={styles.goBackButton}
@@ -68,23 +71,34 @@ const RegisterScreen = () => {
         <CustomInput
           iconNameSimple="user"
           placeholder={translate("enterusername")}
+          value={user}
+          keyboardType="default"
+          onChangeText={setUser}
         />
         <CustomInput
           iconNameIocons="mail-outline"
           placeholder={translate("enterEmail")}
+          value={email}
           keyboardType="email-address"
+          onChangeText={setEmail}
         />
         <CustomInput
           iconNameIocons="lock-closed-outline"
           placeholder={translate("enterPassword")}
           secureTextEntry={true}
-          onPressEye={() => console.log("Eye pressed")}
+          value={password}
+          onChangeText={setPassword}
         />
+        {errorMessage ? (
+          <View style={styles.errorContainer}>
+            <Text style={styles.errorText}>{errorMessage}</Text>
+          </View>
+        ) : null}
 
         <View style={styles.buttonContainer}>
           <TouchableOpacity
             style={styles.button}
-            onPress={handleLoginexitoso}
+            onPress={handleRegister}
           >
             <Text style={styles.buttonText}>{translate("signup")}</Text>
             <View style={styles.registerloadingContainer}>
@@ -95,11 +109,11 @@ const RegisterScreen = () => {
           <Text style={styles.orText}>{translate("orcontinue")}</Text>
 
           <View style={styles.socialButtons}>
-            <TouchableOpacity style={styles.googleButton} onPress={handlegoogle}>
+            <TouchableOpacity style={styles.googleButton}>
               <Ionicons name="logo-google" size={25} color="#FF6F61" />
             </TouchableOpacity>
 
-            <TouchableOpacity style={styles.googleButton} onPress={handlegoogle}>
+            <TouchableOpacity style={styles.googleButton}>
               <Ionicons name="logo-github" size={25} color="#FF6F61" />
             </TouchableOpacity>
           </View>
@@ -118,7 +132,7 @@ const RegisterScreen = () => {
 
 const styles = {
   form: {
-    flexGrow: 1, 
+    flexGrow: 1,
     justifyContent: "flex-start",
     alignItems: "center",
     paddingHorizontal: 20,
@@ -215,6 +229,22 @@ const styles = {
     fontSize: 18,
     fontWeight: "bold",
     textDecorationLine: "underline",
+  },
+  errorContainer: {
+    width: "90%",
+    backgroundColor: "#F8D7DA", 
+    borderColor: "#F5C6CB", 
+    borderWidth: 1,
+    borderRadius: 8,
+    padding: 10,
+    marginBottom: 15,
+    marginTop: 10,
+  },
+  errorText: {
+    color: "#721C24", 
+    fontSize: 14,
+    fontWeight: "bold",
+    textAlign: "center",
   },
 };
 

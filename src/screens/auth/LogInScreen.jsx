@@ -13,26 +13,37 @@ import { useNavigation } from "@react-navigation/native";
 import Loading from "../../components/Loading/Loading";
 import CustomInput from "../../components/Common/CustomInput";
 import { useLanguage } from "../../context/LanguageContext";
+import { useUser } from "../../context/UserContext";
 
 const LogInScreen = () => {
   const navigation = useNavigation();
   const [loading, setLoading] = useState(false);
-  const { translate} = useLanguage(); 
+  const { translate } = useLanguage();
+  const { loginUser } = useUser();
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [errorMessage, setErrorMessage] = useState("");
 
-
-  const handleLogin = () => {
+  const handleBack = () => {
     navigation.navigate("RegisterScreen");
   };
-  const handleLoginexitoso = () => {
+
+  const handleLogin = async () => {
     setLoading(true);
-    setTimeout(() => {
+    setErrorMessage(""); 
+    try {
+      await loginUser(email, password); 
       setLoading(false);
-      navigation.navigate("HomeScreen");
-    }, 2000); 
+    } catch (error) {
+      setLoading(false);
+      setErrorMessage(error.message);
+    }
   };
+
   const handleGoBack = () => {
     navigation.navigate("InitScreen");
   };
+
   const ForgotPasswordScreen = () => {
     navigation.navigate("ForgotPasswordScreen");
   };
@@ -63,13 +74,22 @@ const LogInScreen = () => {
           <CustomInput
             iconNameSimple="user"
             placeholder={translate("enterusername")}
+            value={email}
+            onChangeText={setEmail}
           />
           <CustomInput
             iconNameIocons="lock-closed-outline"
             placeholder={translate("enterPassword")}
             secureTextEntry={true}
+            value={password}
+            onChangeText={setPassword}
             onPressEye={() => console.log("Eye pressed")}
           />
+        {errorMessage ? (
+          <View style={styles.errorContainer}>
+            <Text style={styles.errorText}>{errorMessage}</Text>
+          </View>
+        ) : null}
           <View style={styles.forgotPasswordContainer}>
             <TouchableOpacity onPress={ForgotPasswordScreen}>
               <Text style={styles.forgotPasswordText}>{translate("forgotPassword")}</Text>
@@ -78,7 +98,7 @@ const LogInScreen = () => {
 
           <TouchableOpacity
             style={styles.button}
-            onPress={handleLoginexitoso}
+            onPress={handleLogin}
           >
             <Text style={styles.buttonText}>{translate("login")}</Text>
             <View style={styles.loadingContainer}>
@@ -100,7 +120,7 @@ const LogInScreen = () => {
 
           <View style={styles.footerContainer}>
             <Text style={styles.footerText}>{translate("haveaccount")}</Text>
-            <TouchableOpacity onPress={handleLogin} style={styles.loginLink}>
+            <TouchableOpacity onPress={handleBack} style={styles.loginLink}>
               <Text style={styles.loginText}>{translate("signup")}</Text>
             </TouchableOpacity>
           </View>
@@ -222,6 +242,27 @@ const styles = StyleSheet.create({
     fontSize: 18,
     fontWeight: "bold",
     textDecorationLine: "underline",
+  },
+  errorMessage: {
+    color: "red",
+    textAlign: "center",
+    marginTop: 10,
+  },
+  errorContainer: {
+    width: "90%",
+    backgroundColor: "#F8D7DA", 
+    borderColor: "#F5C6CB", 
+    borderWidth: 1,
+    borderRadius: 8,
+    padding: 10,
+    marginBottom: 15,
+    marginTop: 10,
+  },
+  errorText: {
+    color: "#721C24", 
+    fontSize: 14,
+    fontWeight: "bold",
+    textAlign: "center",
   },
 });
 

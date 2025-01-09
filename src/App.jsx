@@ -4,14 +4,17 @@ import { NavigationContainer } from '@react-navigation/native';
 import { registerRootComponent } from 'expo';
 import StackNavigator from "./navigation/StackNavigator";
 import { LanguageProvider } from "./context/LanguageContext";
+import { UserProvider } from "./context/UserContext";
 
 const App = () => {
   return (
-    <LanguageProvider>
-      <NavigationContainer>
-        <StackNavigator />  
-      </NavigationContainer>
-    </LanguageProvider>
+    <NavigationContainer>
+      <LanguageProvider>
+        <UserProvider>
+          <StackNavigator />  
+        </UserProvider>
+      </LanguageProvider>
+    </NavigationContainer>
   );
 };
 

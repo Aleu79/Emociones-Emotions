@@ -2,12 +2,12 @@
   "expo": {
     "version": "1.0.0",
     "entryPoint": "./src/App.jsx",
-    "scheme": "acme",
+    "scheme": "",
     "orientation": "portrait",
-    "icon": "./src/logo.png",
+    "icon": "./assents/logo.png",
     "userInterfaceStyle": "light",
     "splash": {
-      "image": "./src/logo.png",
+      "image": "./assents/logo.png",
       "resizeMode": "contain",
       "backgroundColor": "#f5f5f5"
     },
