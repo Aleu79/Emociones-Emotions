@@ -38,7 +38,6 @@ const ForgotPasswordScreen = () => {
       Alert.alert(
         translate("passwordResetSent"),
         translate("passwordResetMessage"),
-        [{ text: "OK", onPress: () => navigation.navigate("LogInScreen") }]
       );
     } catch (error) {
       setErrorMessage(error.message || translate("unknownError"));

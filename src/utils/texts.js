@@ -37,6 +37,12 @@ export const texts = {
     checkEmailFormat: "Please check the email format.",
     userDisabled: "This account has been disabled.",
     tooManyRequests: "Too many attempts. Try again later.",
+    verifyEmail: "Email Verification",
+    verifyEmailMessage: "We have sent a verification email. Please check your email.",
+    verifyTimeout: "Timeout",
+    verifyTimeoutMessage: "The email was not verified within the allowed time. Please try registering again.",
+    emailVerified: "Email Verified",
+    accessGranted: "Access granted. Welcome."
   },
   es: {
     welcome: "Bienvenido a Emotions",
@@ -76,5 +82,11 @@ export const texts = {
     checkEmailFormat: "Por favor, verifica el formato del correo electrónico.",
     userDisabled: "Esta cuenta ha sido deshabilitada.",
     tooManyRequests: "Demasiados intentos. Intenta nuevamente más tarde.",
+    verifyEmail: "Verificación de correo",
+    verifyEmailMessage: "Hemos enviado un correo de verificación. Por favor, verifica tu email.",
+    verifyTimeout: "Tiempo agotado",
+    verifyTimeoutMessage: "No se verificó el correo en el tiempo permitido. Intenta registrarte de nuevo.",
+    emailVerified: "Correo verificado",
+    accessGranted: "Acceso concedido. Bienvenido."
   }
-};
+}
