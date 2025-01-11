@@ -5,7 +5,6 @@ import {
   View,
   KeyboardAvoidingView,
   Platform,
-  StyleSheet,
 } from "react-native";
 import React, { useState } from "react";
 import Ionicons from "react-native-vector-icons/Ionicons";
@@ -30,9 +29,9 @@ const LogInScreen = () => {
 
   const handleLogin = async () => {
     setLoading(true);
-    setErrorMessage(""); 
+    setErrorMessage("");
     try {
-      await loginUser(email, password); 
+      await loginUser(email, password);
       setLoading(false);
     } catch (error) {
       setLoading(false);
@@ -50,27 +49,31 @@ const LogInScreen = () => {
 
   return (
     <KeyboardAvoidingView
-      style={styles.container}
+      className="flex-1 bg-white"
       behavior={Platform.OS === "ios" ? "padding" : "height"}
     >
       <ScrollView
-        contentContainerStyle={styles.scrollViewContent}
+        contentContainerStyle={{ flexGrow: 1 }}
         keyboardShouldPersistTaps="handled"
-        style={styles.scrollView}
+        className="px-5"
       >
         <TouchableOpacity
-          style={styles.goBackButton}
+          className="h-10 w-10 items-center justify-center mt-12 ml-5"
           onPress={handleGoBack}
         >
           <Ionicons name="chevron-back-outline" color="#000" size={20} />
         </TouchableOpacity>
-        
-        <View style={styles.titleContainer}>
-          <Text style={styles.titleText}>{translate("heywelcome")}</Text>
-          <Text style={styles.titleText}>{translate("heywelcomeback")}</Text>
+
+        <View className="mt-10 mb-4 w-full">
+          <Text className="text-4xl font-bold text-black mb-2 ml-5">
+            {translate("heywelcome")}
+          </Text>
+          <Text className="text-4xl font-bold text-black mb-2 ml-5">
+            {translate("heywelcomeback")}
+          </Text>
         </View>
 
-        <View style={styles.inputContainer}>
+        <View className="mb-5">
           <CustomInput
             iconNameSimple="user"
             placeholder={translate("enterusername")}
@@ -80,48 +83,56 @@ const LogInScreen = () => {
           <CustomInput
             iconNameIocons="lock-closed-outline"
             placeholder={translate("enterPassword")}
-            secureTextEntry={true}
+            secureTextEntry
             value={password}
             onChangeText={setPassword}
             onPressEye={() => console.log("Eye pressed")}
           />
-        {errorMessage ? (
-          <View style={styles.errorContainer}>
-            <Text style={styles.errorText}>{errorMessage}</Text>
-          </View>
-        ) : null}
-          <View style={styles.forgotPasswordContainer}>
+
+          {errorMessage ? (
+            <View className="w-[90%] bg-[#F8D7DA] border border-[#F5C6CB] rounded-lg p-3 mb-4 mt-2 mx-auto">
+              <Text className="text-[#721C24] text-sm font-bold text-center">
+                {errorMessage}
+              </Text>
+            </View>
+          ) : null}
+
+          <View className="my-5 items-center">
             <TouchableOpacity onPress={ForgotPasswordScreen}>
-              <Text style={styles.forgotPasswordText}>{translate("forgotPassword")}</Text>
+              <Text className="text-[#FF6F61]">{translate("forgotPassword")}</Text>
             </TouchableOpacity>
           </View>
 
           <TouchableOpacity
-            style={styles.button}
+            className="bg-[#FF6F61] rounded-full py-4 w-[90%] items-center mx-auto shadow-md"
             onPress={handleLogin}
           >
-            <Text style={styles.buttonText}>{translate("login")}</Text>
-            <View style={styles.loadingContainer}>
-              {loading && <Loading />}
-            </View>
+            <Text className="text-white text-lg font-bold uppercase">
+              {translate("login")}
+            </Text>
+            {loading && <View className="absolute right-3 top-2"><Loading /></View>}
           </TouchableOpacity>
 
-          <Text style={styles.orText}>{translate("orcontinue")}</Text>
+          <Text className="text-center my-5 text-gray-500">
+            {translate("orcontinue")}
+          </Text>
 
-          <View style={styles.socialButtonsContainer}>
-            <TouchableOpacity style={styles.socialButton}>
+          <View className="flex-row justify-center">
+            <TouchableOpacity className="flex-row items-center justify-center border-2 border-[#FF6F61] rounded-full p-3 mx-2">
               <Ionicons name="logo-google" size={25} color="#FF6F61" />
             </TouchableOpacity>
 
-            <TouchableOpacity style={styles.socialButton}>
+            <TouchableOpacity className="flex-row items-center justify-center border-2 border-[#FF6F61] rounded-full p-3 mx-2">
               <Ionicons name="logo-github" size={25} color="#FF6F61" />
             </TouchableOpacity>
           </View>
 
-          <View style={styles.footerContainer}>
-            <Text style={styles.footerText}>{translate("haveaccount")}</Text>
-            <TouchableOpacity onPress={handleBack} style={styles.loginLink}>
-              <Text style={styles.loginText}>{translate("signup")}</Text>
+          <View className="flex-row justify-center mt-5">
+            <Text className="text-gray-500 text-base">{translate("haveaccount")}</Text>
+            <TouchableOpacity onPress={handleBack} className="ml-2">
+              <Text className="text-[#FF6F61] text-base font-bold underline">
+                {translate("signup")}
+              </Text>
             </TouchableOpacity>
           </View>
         </View>
@@ -129,141 +140,5 @@ const LogInScreen = () => {
     </KeyboardAvoidingView>
   );
 };
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: "#fff",
-  },
-  scrollViewContent: {
-    flexGrow: 1,
-    justifyContent: "center",
-    paddingBottom: 20,
-  },
-  scrollView: {
-    paddingHorizontal: 20,
-  },
-  goBackButton: {
-    height: 40,
-    width: 40,
-    backgroundColor: "#FF6F61",
-    borderRadius: 20,
-    alignItems: "center",
-    justifyContent: "center",
-    marginTop: 50,
-    alignSelf: "flex-start",
-    marginLeft: "5%",
-  },
-  titleContainer: {
-    marginTop: 40,
-    marginBottom: 10,
-    width: "100%",
-  },
-  titleText: {
-    fontSize: 40,
-    fontWeight: "bold",
-    color: "#000",
-    marginBottom: 8,
-    alignSelf: "flex-start",
-    marginLeft: "5%",
-  },
-  inputContainer: {
-    marginBottom: 20,
-  },
-  forgotPasswordContainer: {
-    flex: 1,
-    justifyContent: "center",
-    alignItems: "center",
-    marginVertical: 20,
-  },
-  forgotPasswordText: {
-    color: "#FF6F61",
-  },
-  button: {
-    backgroundColor: "#FF6F61",
-    borderRadius: 40,
-    padding: 15,
-    width: "90%",
-    alignItems: "center",
-    shadowColor: "#000",
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.25,
-    shadowRadius: 3.84,
-    elevation: 1,
-    alignSelf: "center",
-  },
-  buttonText: {
-    color: "#fff",
-    fontSize: 18,
-    fontWeight: "bold",
-    textTransform: "uppercase",
-  },
-  loadingContainer: {
-    position: "absolute",
-    right: 10,
-    top: "100%",
-    transform: [{ translateY: -20 }],
-  },
-  orText: {
-    textAlign: "center",
-    margin: 20,
-    color: "#666",
-  },
-  socialButtonsContainer: {
-    flexDirection: "row",
-    justifyContent: "center",
-    alignItems: "center",
-  },
-  socialButton: {
-    flexDirection: "row",
-    alignItems: "center",
-    justifyContent: "center",
-    borderWidth: 2,
-    borderColor: "#FF6F61",
-    borderRadius: 40,
-    padding: 12,
-    marginHorizontal: 10,
-  },
-  footerContainer: {
-    flexDirection: "row",
-    justifyContent: "center",
-    alignItems: "center",
-    marginTop: 20,
-  },
-  footerText: {
-    color: "#666",
-    fontSize: 16,
-  },
-  loginLink: {
-    marginLeft: 8,
-  },
-  loginText: {
-    color: "#FF6F61",
-    fontSize: 18,
-    fontWeight: "bold",
-    textDecorationLine: "underline",
-  },
-  errorMessage: {
-    color: "red",
-    textAlign: "center",
-    marginTop: 10,
-  },
-  errorContainer: {
-    width: "90%",
-    backgroundColor: "#F8D7DA", 
-    borderColor: "#F5C6CB", 
-    borderWidth: 1,
-    borderRadius: 8,
-    padding: 10,
-    marginBottom: 15,
-    marginTop: 10,
-  },
-  errorText: {
-    color: "#721C24", 
-    fontSize: 14,
-    fontWeight: "bold",
-    textAlign: "center",
-  },
-});
 
 export default LogInScreen;
