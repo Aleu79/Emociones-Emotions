@@ -35,10 +35,6 @@ const ForgotPasswordScreen = () => {
 
     try {
       await resetPassword(email); 
-      Alert.alert(
-        translate("passwordResetSent"),
-        translate("passwordResetMessage"),
-      );
     } catch (error) {
       setErrorMessage(error.message || translate("unknownError"));
     }

@@ -42,7 +42,8 @@ export const texts = {
     verifyTimeout: "Timeout",
     verifyTimeoutMessage: "The email was not verified within the allowed time. Please try registering again.",
     emailVerified: "Email Verified",
-    accessGranted: "Access granted. Welcome."
+    accessGranted: "Access granted. Welcome.",
+    invalidApiKey: "Invalid API key. Please check your Firebase configuration.",  
   },
   es: {
     welcome: "Bienvenido a Emotions",
@@ -87,6 +88,7 @@ export const texts = {
     verifyTimeout: "Tiempo agotado",
     verifyTimeoutMessage: "No se verificó el correo en el tiempo permitido. Intenta registrarte de nuevo.",
     emailVerified: "Correo verificado",
-    accessGranted: "Acceso concedido. Bienvenido."
+    accessGranted: "Acceso concedido. Bienvenido.",
+    invalidApiKey: "Clave de API inválida. Por favor, verifica tu configuración de Firebase."  
   }
-}
+} 
