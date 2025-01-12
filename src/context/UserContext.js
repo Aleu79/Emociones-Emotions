@@ -6,6 +6,7 @@ import {
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
   sendPasswordResetEmail,
+  signOut,
 } from "../services/Firebase-config";
 import { useLanguage } from "./LanguageContext";
 
@@ -93,7 +94,7 @@ export const UserProvider = ({ children }) => {
       Alert.alert(translate("invalidEmail"), translate("checkEmailFormat"));
       return;
     }
-  
+
     try {
       await sendPasswordResetEmail(auth, email);
       Alert.alert(translate("passwordResetSent"), translate("passwordResetMessage"));
@@ -114,8 +115,20 @@ export const UserProvider = ({ children }) => {
     }
   };
 
+  const logoutUser = async () => {
+    try {
+      await signOut(auth);
+      setUser(null);
+      Alert.alert(translate("logoutSuccess"), translate("logoutMessage"));
+      navigation.navigate("LoginScreen");
+    } catch (error) {
+      console.error("Error cerrando sesión:", error.message);
+      Alert.alert(translate("logoutError"), translate("tryAgain"));
+    }
+  };
+
   return (
-    <UserContext.Provider value={{ user, setUser, registerUser, loginUser, resetPassword }}>
+    <UserContext.Provider value={{ user, setUser, registerUser, loginUser, resetPassword, logoutUser }}>
       {children}
     </UserContext.Provider>
   );

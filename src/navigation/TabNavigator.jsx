@@ -1,38 +1,37 @@
 import React from "react";
-import { View, TouchableOpacity, Text } from "react-native";
+import { View, TouchableOpacity } from "react-native";
 import Icon from "react-native-vector-icons/Ionicons";
 import FontAwesome from "react-native-vector-icons/FontAwesome";
+import { useNavigation, useRoute } from "@react-navigation/native";
 
-const TabNavigator = ({ isDarkTheme, unreadNotifications }) => {
+const TabNavigator = ({ isDarkTheme }) => {
+  const navigation = useNavigation();
+  const route = useRoute(); 
+
+  const handleNavigate = (screenName) => {
+    navigation.navigate(screenName);
+  };
+
   return (
     <View
       className={`absolute bottom-0 left-0 right-0 flex-row justify-around items-center py-3 ${
         isDarkTheme ? "bg-[#1a1a1a] border-t border-[#333]" : "bg-white border-t border-[#ccc]"
       }`}
     >
-      <TouchableOpacity>
+      <TouchableOpacity onPress={() => handleNavigate("HomeScreen")}>
         <Icon
           name="home-outline"
           size={30}
-          color={isDarkTheme ? "#fff" : "#333"}
+          color={route.name === "HomeScreen" ? (isDarkTheme ? "#ffcc00" : "#333") : (isDarkTheme ? "#fff" : "#333")}
         />
       </TouchableOpacity>
 
       <TouchableOpacity>
-        <View className="relative items-center">
-          <Icon
-            name="mail-outline"
-            size={30}
-            color={isDarkTheme ? "#fff" : "#333"}
-          />
-          {unreadNotifications > 0 && (
-            <View className="absolute -top-1 -right-1 bg-[#e74c3c] rounded-full w-5 h-5 justify-center items-center">
-              <Text className="text-white text-xs font-bold">
-                {unreadNotifications}
-              </Text>
-            </View>
-          )}
-        </View>
+        <Icon
+          name="search-outline"
+          size={30}
+          color={isDarkTheme ? "#fff" : "#333"}
+        />
       </TouchableOpacity>
 
       <TouchableOpacity>
@@ -51,11 +50,11 @@ const TabNavigator = ({ isDarkTheme, unreadNotifications }) => {
         />
       </TouchableOpacity>
 
-      <TouchableOpacity>
+      <TouchableOpacity onPress={() => handleNavigate("Profile")}>
         <Icon
           name="person-outline"
           size={30}
-          color={isDarkTheme ? "#fff" : "#333"}
+          color={route.name === "ProfileScreen" ? (isDarkTheme ? "#ffcc00" : "#333") : (isDarkTheme ? "#fff" : "#333")}
         />
       </TouchableOpacity>
     </View>
@@ -63,3 +62,11 @@ const TabNavigator = ({ isDarkTheme, unreadNotifications }) => {
 };
 
 export default TabNavigator;
+
+// <TouchableOpacity onPress={() => setShowIcon(!showIcon)}>
+//   {showIcon ? (
+//     <Ionicons name="sunny" size={24} color="white" />
+//   ) : (
+//     <Ionicons name="moon" size={24} color="white" />
+//   )}
+// </TouchableOpacity>

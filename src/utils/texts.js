@@ -44,6 +44,11 @@ export const texts = {
     emailVerified: "Email Verified",
     accessGranted: "Access granted. Welcome.",
     invalidApiKey: "Invalid API key. Please check your Firebase configuration.",  
+    publicaciones: "Posts", 
+    seguidores: "Followers", 
+    siguiendo: "Following", 
+    editarPerfil: "Edit Profile", 
+    compartirPerfil:"Share Profile",
   },
   es: {
     welcome: "Bienvenido a Emotions",
@@ -89,6 +94,11 @@ export const texts = {
     verifyTimeoutMessage: "No se verificó el correo en el tiempo permitido. Intenta registrarte de nuevo.",
     emailVerified: "Correo verificado",
     accessGranted: "Acceso concedido. Bienvenido.",
-    invalidApiKey: "Clave de API inválida. Por favor, verifica tu configuración de Firebase."  
+    invalidApiKey: "Clave de API inválida. Por favor, verifica tu configuración de Firebase." ,
+    seguidores: "Seguidores", 
+    siguiendo: "Siguiendo",
+    editarPerfil: "Editar perfil", 
+    publicaciones: "Publicaciones",
+    compartirPerfil:"Compartir Perfil",
   }
 } 
