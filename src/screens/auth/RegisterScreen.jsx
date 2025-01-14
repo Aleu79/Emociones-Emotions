@@ -26,16 +26,21 @@ const RegisterScreen = () => {
   const [errorMessage, setErrorMessage] = useState('');  
 
   const handleRegister = async () => {
-    setLoading(true); 
-    setErrorMessage(""); 
+    setLoading(true);
+    setErrorMessage("");
     try {
-      await registerUser(email, password); 
+      await registerUser(email, password);
+      Alert.alert(
+        translate("verificationRequired"),
+        translate("checkEmailToVerify")
+      );
     } catch (error) {
       setErrorMessage(error.message);
     } finally {
       setLoading(false);
     }
   };
+  
   
 
   const handleLogin = () => {

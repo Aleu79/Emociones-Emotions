@@ -7,6 +7,7 @@ import {
   signInWithEmailAndPassword,
   sendPasswordResetEmail,
   signOut,
+  sendEmailVerification,
 } from "../services/Firebase-config";
 import { useLanguage } from "./LanguageContext";
 
@@ -18,16 +19,40 @@ export const UserProvider = ({ children }) => {
   const { translate } = useLanguage();
 
   useEffect(() => {
-    const unsubscribe = auth.onAuthStateChanged(setUser);
+    const unsubscribe = auth.onAuthStateChanged((firebaseUser) => {
+      setUser(firebaseUser);
+      if (firebaseUser && firebaseUser.emailVerified) {
+        navigation.navigate("HomeScreen"); 
+      }
+    });
+
     return unsubscribe;
-  }, []);
+  }, [navigation]);
+
+  useEffect(() => {
+    const interval = setInterval(async () => {
+      if (auth.currentUser && !auth.currentUser.emailVerified) {
+        await auth.currentUser.reload();
+        if (auth.currentUser.emailVerified) {
+          setUser(auth.currentUser); 
+          Alert.alert(translate("verificationSuccess"), translate("welcomeHome"));
+          navigation.navigate("HomeScreen");
+        }
+      }
+    }, 5000); 
+
+    return () => clearInterval(interval); 
+  }, [navigation, translate]);
 
   const registerUser = async (email, password) => {
     try {
       const userCredential = await createUserWithEmailAndPassword(auth, email, password);
-      setUser(userCredential.user);
-      Alert.alert(translate("registrationSuccess"), translate("registrationMessage"));
-      navigation.navigate("HomeScreen");
+      const user = userCredential.user;
+
+      await sendEmailVerification(user);
+      Alert.alert(translate("verificationSent"), translate("verificationMessage"));
+
+      setUser(user);
       return true;
     } catch (error) {
       let errorMessage = translate("unknownError");
@@ -41,19 +66,10 @@ export const UserProvider = ({ children }) => {
         case "auth/weak-password":
           errorMessage = translate("weakPassword");
           break;
-        case "auth/missing-email":
-          errorMessage = translate("missingEmail");
-          break;
-        case "auth/missing-password":
-          errorMessage = translate("missingPassword");
-          break;
-        case "auth/network-request-failed":
-          errorMessage = translate("networkError");
-          break;
         default:
           errorMessage = error.message;
       }
-      console.error("Error registrando el usuario en el contexto:", errorMessage);
+      console.error("Error registrando usuario:", errorMessage);
       throw new Error(errorMessage);
     }
   };
@@ -61,9 +77,18 @@ export const UserProvider = ({ children }) => {
   const loginUser = async (email, password) => {
     try {
       const userCredential = await signInWithEmailAndPassword(auth, email, password);
-      setUser(userCredential.user);
-      Alert.alert(translate("loginSuccess"), translate("loginMessage"));
-      navigation.navigate("HomeScreen");
+      const user = userCredential.user;
+
+      if (!user.emailVerified) {
+        Alert.alert(
+          translate("verificationRequired"),
+          translate("checkEmailToVerify")
+        );
+      } else {
+        setUser(user);
+        Alert.alert(translate("loginSuccess"), translate("loginMessage"));
+        navigation.navigate("HomeScreen");
+      }
     } catch (error) {
       let errorMessage = translate("unknownError");
       switch (error.code) {

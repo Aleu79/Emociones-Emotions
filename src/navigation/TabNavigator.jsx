@@ -1,12 +1,11 @@
 import React from "react";
 import { View, TouchableOpacity } from "react-native";
 import Icon from "react-native-vector-icons/Ionicons";
-import FontAwesome from "react-native-vector-icons/FontAwesome";
 import { useNavigation, useRoute } from "@react-navigation/native";
 
 const TabNavigator = ({ isDarkTheme }) => {
   const navigation = useNavigation();
-  const route = useRoute(); 
+  const route = useRoute();
 
   const handleNavigate = (screenName) => {
     navigation.navigate(screenName);
@@ -34,14 +33,13 @@ const TabNavigator = ({ isDarkTheme }) => {
         />
       </TouchableOpacity>
 
-      <TouchableOpacity>
-        <FontAwesome
-          name="linux"
+      <TouchableOpacity onPress={() => handleNavigate("SocialScreen")}>
+        <Icon
+          name="add-circle-outline"
           size={35}
           color={isDarkTheme ? "#fff" : "#333"}
         />
       </TouchableOpacity>
-
       <TouchableOpacity>
         <Icon
           name="chatbubble-outline"

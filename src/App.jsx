@@ -9,11 +9,11 @@ import { UserProvider } from "./context/UserContext";
 const App = () => {
   return (
     <NavigationContainer>
-      <LanguageProvider>
-        <UserProvider>
-          <StackNavigator />  
-        </UserProvider>
-      </LanguageProvider>
+        <LanguageProvider>
+          <UserProvider>
+            <StackNavigator />  
+          </UserProvider>
+        </LanguageProvider>
     </NavigationContainer>
   );
 };

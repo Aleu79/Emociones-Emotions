@@ -49,6 +49,14 @@ export const texts = {
     siguiendo: "Following", 
     editarPerfil: "Edit Profile", 
     compartirPerfil:"Share Profile",
+    verificationSent: "Verification email sent",
+    verificationMessage: "Check your email and verify your account.",
+    verificationRequired: "Verification required",
+    checkEmailToVerify: "Please check your email to verify your account.",
+    verificationFailed: "Verification failed",
+    verificationTimeExpired: "The time to verify your email has expired. Please register again."
+  
+    
   },
   es: {
     welcome: "Bienvenido a Emotions",
@@ -100,5 +108,13 @@ export const texts = {
     editarPerfil: "Editar perfil", 
     publicaciones: "Publicaciones",
     compartirPerfil:"Compartir Perfil",
+    verificationSent: "Correo de verificación enviado",
+    verificationMessage: "Revisa tu correo y verifica tu cuenta.",
+    verificationRequired: "Verificación requerida",
+    checkEmailToVerify: "Por favor, verifica tu correo para continuar.",
+    verificationFailed: "Verificación fallida",
+    verificationTimeExpired: "El tiempo para verificar tu correo ha expirado. Regístrate nuevamente."
+    
+    
   }
 } 
